@@ -1,5 +1,5 @@
 .headerContainer {
-  max-width: 1120px;
+  max-width: 720px;
   margin: 4.97rem auto;
 }
 
@@ -7,7 +7,7 @@
   a {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 
     color: var(--white);
     font-size: large;
