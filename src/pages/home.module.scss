@@ -1,0 +1,52 @@
+.posts {
+  max-width: 720px;
+
+  a {
+    display: block;
+    & + a {
+      margin-top: 2rem;
+      padding-top: 1.2rem;
+    }
+
+    strong {
+      font-size: 1.75rem;
+      font-weight: 700;
+      line-height: 33px;
+    }
+
+    > p {
+      color: var(--gray-300);
+      font-size: 1.125rem;
+      margin-top: 0.5rem;
+    }
+  }
+
+  button {
+    background: inherit;
+    border: 0;
+    color: var(--pink-500);
+    margin-top: 4rem;
+
+    font-size: 1.125rem;
+    font-weight: 600;
+    transition: filter 0.3s;
+
+    &:hover {
+      filter: brightness(0.85);
+    }
+  }
+}
+
+.postFooter {
+  display: flex;
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  color: var(--gray-500);
+  time {
+    margin-right: 1.5rem;
+  }
+
+  svg {
+    margin-right: 0.5rem;
+  }
+}
