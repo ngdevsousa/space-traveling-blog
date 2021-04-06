@@ -1,16 +1,21 @@
 .headerContainer {
-  max-width: 720px;
+  max-width: 1120px;
   margin: 4.97rem auto;
+  padding: 0;
 }
 
 .headerContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   a {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    min-width: 720px;
 
     color: var(--white);
-    font-size: large;
+    font-size: 1.2rem;
     font-weight: bold;
 
     img {
@@ -21,5 +26,27 @@
       padding-left: 0.35rem;
       color: var(--pink-500);
     }
+  }
+}
+
+@media (max-width: 1080px) {
+  .headerContent {
+    a {
+      min-width: 679px;
+    }
+  }
+}
+
+@media (max-width: 720px) {
+  .headerContent {
+    a {
+      min-width: 630px;
+    }
+  }
+}
+
+@media (max-width: 630px) {
+  .headerContent {
+    display: block;
   }
 }
