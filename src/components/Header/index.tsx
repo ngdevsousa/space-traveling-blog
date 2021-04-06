@@ -4,10 +4,10 @@ export default function Header(): JSX.Element {
   return (
     <header className={styles.headerContainer}>
       <div className={styles.headerContent}>
-        <img src="logo.svg" alt="logo" />
-        <p>
+        <a>
+          <img src="logo.svg" alt="logo" />
           spacetraveling<span>.</span>
-        </p>
+        </a>
       </div>
     </header>
   );

@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { GetStaticProps } from 'next';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FaCalendar, FaUser } from 'react-icons/fa';
 import Header from '../components/Header';
 import { getPrismicClient } from '../services/prismic';

@@ -1,17 +1,21 @@
 .headerContainer {
-  margin: 5rem auto auto 23.25rem;
+  max-width: 1120px;
+  margin: 4.97rem auto;
 }
 
 .headerContent {
-  max-width: 1120px;
-  display: flex;
-  align-items: center;
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  p {
-    padding-left: 1rem;
     color: var(--white);
     font-size: large;
     font-weight: bold;
+
+    img {
+      padding-right: 1rem;
+    }
 
     span {
       padding-left: 0.35rem;
