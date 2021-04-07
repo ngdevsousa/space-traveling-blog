@@ -1,6 +1,7 @@
 import Prismic from '@prismicio/client';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { RichText } from 'prismic-dom';
 import { FiCalendar, FiClock, FiUser } from 'react-icons/fi';
 import Header from '../../components/Header';
@@ -38,9 +39,15 @@ interface PostProps {
 }
 
 export default function Post({ post }: PostProps): JSX.Element {
+  const router = useRouter();
+
+  if (router.isFallback) {
+    return <div>Carregando...</div>;
+  }
+
   return (
     <>
-      {post ? (
+      {post && (
         <>
           <Head>
             <title>{post.data.title}</title>
@@ -80,8 +87,6 @@ export default function Post({ post }: PostProps): JSX.Element {
             </article>
           </main>
         </>
-      ) : (
-        <h1>Carregando...</h1>
       )}
     </>
   );
@@ -99,7 +104,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     return { params: { slug: p.uid } };
   });
   return {
-    fallback: 'blocking',
+    fallback: true,
     paths,
   };
 };
