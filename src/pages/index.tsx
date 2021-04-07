@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useState } from 'react';
 import { FaCalendar, FaUser } from 'react-icons/fa';
+import Header from '../components/Header';
 import { formatDate } from '../services/dates';
 import { getPrismicClient } from '../services/prismic';
 import commonStyles from '../styles/common.module.scss';
@@ -47,6 +48,7 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
       <Head>
         <title>Home</title>
       </Head>
+      <Header />
       <main className={commonStyles.container}>
         <div className={styles.posts}>
           {posts?.results.map(p => (

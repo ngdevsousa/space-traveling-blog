@@ -1,7 +1,9 @@
+import Prismic from '@prismicio/client';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
 import { RichText } from 'prismic-dom';
 import { FiCalendar, FiClock, FiUser } from 'react-icons/fi';
+import Header from '../../components/Header';
 import { formatDate } from '../../services/dates';
 import { getPrismicClient } from '../../services/prismic';
 import commonStyles from '../../styles/common.module.scss';
@@ -9,8 +11,10 @@ import styles from './post.module.scss';
 
 interface Post {
   first_publication_date: string | null;
+  uid?: string;
   data: {
     title: string;
+    subtitle: string;
     banner: {
       url: string;
     };
@@ -24,19 +28,24 @@ interface Post {
   };
 }
 
+interface PostPagination {
+  next_page: string;
+  results: Post[];
+}
+
 interface PostProps {
   post: Post;
 }
 
 export default function Post({ post }: PostProps): JSX.Element {
-  console.log(post.data);
   return (
     <>
-      {post && (
+      {post ? (
         <>
           <Head>
             <title>{post.data.title}</title>
           </Head>
+          <Header />
           <img
             src={post.data.banner.url}
             alt="banner"
@@ -58,8 +67,8 @@ export default function Post({ post }: PostProps): JSX.Element {
                   <FiClock />4 min
                 </p>
               </div>
-              {post.data.content.map(c => (
-                <div className={styles.postSection}>
+              {post.data.content.map((c, index) => (
+                <div key={String(index)} className={styles.postSection}>
                   <h1>{c.heading}</h1>
                   <div
                     dangerouslySetInnerHTML={{
@@ -71,18 +80,27 @@ export default function Post({ post }: PostProps): JSX.Element {
             </article>
           </main>
         </>
+      ) : (
+        <h1>Carregando...</h1>
       )}
     </>
   );
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  // const prismic = getPrismicClient();
-  // const posts = await prismic.query(TODO);
-
+  const prismic = getPrismicClient();
+  const posts: PostPagination = await prismic.query(
+    Prismic.predicates.at('document.type', 'posts'),
+    {
+      fetch: ['post.slug'],
+    }
+  );
+  const paths = posts.results.map(p => {
+    return { params: { slug: p.uid } };
+  });
   return {
     fallback: 'blocking',
-    paths: [],
+    paths,
   };
 };
 
@@ -96,19 +114,9 @@ export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
       redirect: 30 * 60,
     };
 
-  const post: Post = {
-    data: {
-      title: response.data.title,
-      author: response.data.author,
-      banner: response.data.banner,
-      content: response.data.content,
-    },
-    first_publication_date: response.first_publication_date,
-  };
-
   return {
     props: {
-      post,
+      post: response,
     },
     redirect: 30 * 60,
   };
