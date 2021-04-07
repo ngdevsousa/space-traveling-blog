@@ -2,10 +2,10 @@ import Prismic from '@prismicio/client';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { GetStaticProps } from 'next';
+import Head from 'next/head';
 import Link from 'next/link';
 import { useState } from 'react';
 import { FaCalendar, FaUser } from 'react-icons/fa';
-import Header from '../components/Header';
 import { getPrismicClient } from '../services/prismic';
 import commonStyles from '../styles/common.module.scss';
 import styles from './home.module.scss';
@@ -47,7 +47,9 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
 
   return (
     <>
-      <Header />
+      <Head>
+        <title>Home</title>
+      </Head>
       <main className={commonStyles.container}>
         <div className={styles.posts}>
           {posts?.results.map(p => (
