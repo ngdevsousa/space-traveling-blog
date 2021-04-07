@@ -13,6 +13,7 @@ import styles from './post.module.scss';
 interface Post {
   first_publication_date: string | null;
   uid?: string;
+  estimatedTime?: number;
   data: {
     title: string;
     subtitle: string;
@@ -71,7 +72,8 @@ export default function Post({ post }: PostProps): JSX.Element {
                   {post.data.author}
                 </p>
                 <p>
-                  <FiClock />4 min
+                  <FiClock />
+                  {post.estimatedTime} min
                 </p>
               </div>
               {post.data.content.map((c, index) => (
@@ -119,9 +121,18 @@ export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
       redirect: 30 * 60,
     };
 
+  const reduceContentTime = (totalTime: number, content: any): number => {
+    const wordsCount = RichText.asText(content.body).split(RegExp('[\\W+]+'))
+      .length;
+    return totalTime + wordsCount;
+  };
+  const estimatedTime = Math.ceil(
+    response.data.content.reduce(reduceContentTime, 0) / 200
+  );
+
   return {
     props: {
-      post: response,
+      post: { ...response, estimatedTime },
     },
     redirect: 30 * 60,
   };
