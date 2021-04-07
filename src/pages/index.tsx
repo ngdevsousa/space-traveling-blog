@@ -1,11 +1,10 @@
 import Prismic from '@prismicio/client';
-import { format } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useState } from 'react';
 import { FaCalendar, FaUser } from 'react-icons/fa';
+import { formatDate } from '../services/dates';
 import { getPrismicClient } from '../services/prismic';
 import commonStyles from '../styles/common.module.scss';
 import styles from './home.module.scss';
@@ -34,8 +33,6 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
     return postsPagination || undefined;
   });
 
-  const formatDate = (date): string =>
-    format(Date.parse(date), 'dd MMM yyyy', { locale: ptBR });
   const loadMorePosts = async (nextPageURL): Promise<void> => {
     if (!nextPageURL) return;
     const newPosts = await fetch(nextPageURL).then(res => res.json());
